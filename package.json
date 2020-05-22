@@ -1,0 +1,15 @@
+{
+  "private": true,
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "devDependencies": {
+    "lerna": "^3.16.4"
+  },
+  "scripts": {
+    "compile": "lerna run --parallel compile",
+    "start": "lerna run --parallel start",
+    "test": "lerna run --parallel test"
+  }
+}
