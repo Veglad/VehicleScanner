@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    expose:
+      - '3001'
+    ports:
+      - '3001:3001'
+    volumes: 
+      - ./backend:/usr/src/app
+    environment:
+      - FLASK_ENV=development
+      - FLASK_APP=app.py
+
+  frontend:
+    build: ./frontend
+    expose:
+      - 3000
+    ports: 
+      - 3000:80
+    volumes:
+        - ./frontend:/usr/src/app
+        - /usr/src/app/node_modules
+    depends_on:
+      - backend
