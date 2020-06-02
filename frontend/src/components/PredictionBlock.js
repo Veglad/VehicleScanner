@@ -1,26 +1,36 @@
 import React from 'react'
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { Grid, CircularProgress, Typography } from '@material-ui/core';
+import classNames from 'classnames'
 
 const useStyles = makeStyles(() => createStyles({
-  image: {
-    background: '2C2CFF',
-    opacity: 0.5,
-    border: '1px solid rgb(44, 44, 255);',
-    color: 'white',
+  label: {
+    color: '#fff',
   },
   percentage: {
-    fontSize: '1.8em',
+    fontSize: '2.4em',
   },
+  predictionClass: {
+    fontSize: '2.0em',
+  },
+  root: {
+    backgroundColor: 'rgb(0.5,0,176,255)',
+    border: '1px solid #00b0ff',
+    height: '100%',
+  }
 }));
 
 const PredictionBlock = ({ predictionClass, predictionPercentage }) => {
   const classes = useStyles()
 
   return (
-    <Grid container alignContent="center" alignItems="center">
-      <Typography>{predictionClass}</Typography>
-      <Typography className={percentage}>`${predictionPercentage}%`</Typography>
+    <Grid container alignContent="center" alignItems="center" className={classes.root}>
+      <Grid item container justify="center">
+        <Typography className={classNames(classes.label, classes.predictionClass)}>{predictionClass}</Typography>
+      </Grid>
+      <Grid item container justify="center">
+        <Typography className={classNames(classes.label, classes.percentage)}>{predictionPercentage}%</Typography>
+      </Grid>
     </Grid>
   );
 }

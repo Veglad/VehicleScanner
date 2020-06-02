@@ -1,41 +1,30 @@
-import React from 'react'
-import { makeStyles, createStyles } from '@material-ui/core/styles';
-import { Grid, Typography } from '@material-ui/core';
+import React, { useRef, useEffect } from 'react'
 import Boundingbox from 'react-bounding-box'
+import { makeStyles, createStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(() => createStyles({
-  image: {
-    background: '2C2CFF',
-    opacity: 0.5,
-    border: '1px solid rgb(44, 44, 255);',
-    color: 'white',
-  },
-  percentage: {
-    fontSize: '1.8em',
-  },
+  root: {
+    '& canvas': {
+      maxHeight: '100vh !important',
+    },
+  }
 }));
 
-const params = {
-  image: 'http://i.imgur.com/gF7QYwa.jpg',
-  boxes: [
-    // coord(0,0) = top left corner of image
-    //[x, y, width, height]
-    {coord: [0, 0, 250, 250], label: "test"},
-    {coord: [300, 0, 250, 250], label: "A"},
-    {coord: [700, 0, 300, 25], label: "B"},
-    {coord: [1100, 0, 25, 300], label: "C"}
-  ],
-  options: {}
-}
-
-const PredictionBlock = ({ detectionResult }) => {
+const DetectionBlock = ({ image, boxes }) => {
   const classes = useStyles()
+  const ref = useRef()
 
-  return (
-    <Grid container alignContent="center" alignItems="center">
-      <Boundingbox image={params.image} boxes={params.boxes} options={params.options} />
-    </Grid>
-  );
+  useEffect(() => {
+    setTimeout(() => {
+      ref.current.querySelectorAll('canvas')[0].style.cssText = 'max-width: 100%; max-height: 100vh;'
+      console.log(ref.current.querySelectorAll('canvas')[0])
+      console.log(ref.current.querySelectorAll('canvas')[0].style)
+    }, 1)
+  }, [image])
+
+  return <div ref={ref}>
+    <Boundingbox image={image} boxes={boxes} />
+  </div>
 }
 
-export default PredictionBlock
+export default DetectionBlock

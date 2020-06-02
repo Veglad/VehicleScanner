@@ -14,13 +14,14 @@ const useStyles = makeStyles(() => createStyles({
     textAlign: 'center',
     padding: 20,
     border: '3px dashed #eeeeee',
+    borderRadius: 4,
     backgroundColor: '#fafafa',
     color: '#bdbdbd',
     opacity: 0.5,
     marginBottom: 20,
   },
   label: {
-    color: '#2f2f30',
+    color: '#1b1b1b',
   },
 }));
 
