@@ -7,8 +7,6 @@ services:
       - '3001'
     ports:
       - '3001:3001'
-    volumes: 
-      - ./backend:/usr/src/app
     environment:
       - FLASK_ENV=development
       - FLASK_APP=app.py

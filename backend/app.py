@@ -1,29 +1,31 @@
+import json
 import os
 from flask import Flask, request, redirect, url_for
+import detectionService
+import fileService
 
-UPLOAD_FOLDER = 'src'
-ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
+UPLOAD_FOLDER = 'uploadings'
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
-
 @app.route('/predict', methods=['POST'])
-def upload_file():
-    if 'file' not in request.files:
-        return 'No file part'
-    file = request.files['file']
+def predictByImage():
+    filePath = fileService.saveUploadedFile(request.files, app.config['UPLOAD_FOLDER'])
+    darknetRelatedFilePath = os.path.join('../', filePath)
+    resultDict =  detectionService.getPrediction('./darknet', 'data/vehicle.data', 
+            'cfg/vehicle-yolov3.cfg', 'vehicle-yolov3_last.weights', 
+            darknetRelatedFilePath, 0.00001, 'data/vehicle.names')
+    return json.dumps(resultDict)
 
-    if file.filename == '':
-        return 'No selected file'
-
-    if file and allowed_file(file.filename):
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
-        return 'Success'
-    return 'Error'
+@app.route('/detect', methods=['POST'])
+def detectByImage():
+    filePath = fileService.saveUploadedFile(request.files, app.config['UPLOAD_FOLDER'])
+    darknetRelatedFilePath = os.path.join('../', filePath)
+    resultDict = detectionService.getDetectionResults('./darknet', 'data/vehicle.data', 
+        'cfg/vehicle-yolov3.cfg', 'vehicle-yolov3_last.weights', 
+        darknetRelatedFilePath, 0.00001, 'data/vehicle.names')
+    return json.dumps(resultDict)
 
 @app.route('/health')
 def health():

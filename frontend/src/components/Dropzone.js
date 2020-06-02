@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import ReactDropzone from 'react-dropzone'
 import classnames from 'classnames'
 import { makeStyles, createStyles } from '@material-ui/core/styles';
-import { uploadImage } from '../api/api'
 
 const useStyles = makeStyles(() => createStyles({
   reject: {
@@ -17,32 +16,20 @@ const useStyles = makeStyles(() => createStyles({
     border: '3px dashed #eeeeee',
     backgroundColor: '#fafafa',
     color: '#bdbdbd',
+    opacity: 0.5,
     marginBottom: 20,
-  }
+  },
+  label: {
+    color: '#2f2f30',
+  },
 }));
 
-const Dropzone = () => {
+const Dropzone = ({ setFileToUpload }) => {
   const classes = useStyles()
-  const [fileToUpload, setFileToUpload] = useState()
 
   const handleDrop = image => {
     setFileToUpload(image[0])
-    console.log(image)
   }
-
-  useEffect(() => {
-    if (fileToUpload) {
-      (async () => {
-        const imageFormData = new FormData()
-        console.log(fileToUpload)
-        imageFormData.append('file', fileToUpload)
-        imageFormData.append('filename', fileToUpload.name)
-        console.log(imageFormData)
-        const result = await uploadImage(imageFormData)
-        console.log(result)
-      })()
-    }
-  }, [fileToUpload])
 
   return (
     <div className="App">
@@ -62,7 +49,7 @@ const Dropzone = () => {
             <div {...getRootProps({ className: dropzoneClasses })}>
               <input {...getInputProps()} />
               <span>{isDragActive ? "📂" : "📁"}</span>
-              <p>Drag'n'drop images, or click to select files</p>
+              <p className={classes.label}>Drag'n'drop images, or click to select files</p>
             </div>
           );
         }}
