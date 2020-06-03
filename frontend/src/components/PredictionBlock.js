@@ -5,7 +5,7 @@ import classNames from 'classnames'
 
 const useStyles = makeStyles(() => createStyles({
   label: {
-    color: '#fff',
+    color: '#1b1b1b',
   },
   percentage: {
     fontSize: '2.4em',
@@ -14,9 +14,8 @@ const useStyles = makeStyles(() => createStyles({
     fontSize: '2.0em',
   },
   root: {
-    backgroundColor: 'rgb(0.5,0,176,255)',
-    border: '1px solid #00b0ff',
-    height: '100%',
+    backgroundColor: '#00b0ff',
+    minHeight: '100%'
   }
 }));
 
@@ -24,7 +23,7 @@ const PredictionBlock = ({ predictionClass, predictionPercentage }) => {
   const classes = useStyles()
 
   return (
-    <Grid container alignContent="center" alignItems="center" className={classes.root}>
+    <Grid container alignContent="center" className={classes.root}>
       <Grid item container justify="center">
         <Typography className={classNames(classes.label, classes.predictionClass)}>{predictionClass}</Typography>
       </Grid>

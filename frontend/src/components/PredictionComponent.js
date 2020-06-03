@@ -72,11 +72,11 @@ const PredictionComponent = ({ imagePath, prediction = {}, isLoading }) => {
   }, [imagePath])
 
   return (
-    <Grid container spacing={2} justify="center" alignItems="center" wrap="nowrap">
-      <Grid item container className={classes.cell}>
+    <Grid container spacing={2} justify="center" alignItems="stretch" wrap="nowrap">
+      <Grid item container justify="center" className={classes.cell}>
         <img src={imagePath} className={classes.image} ref={imageRef} />
       </Grid>
-      <Grid item container alignItems="stretch" className={classes.cell}>
+      <Grid item container justify="center" alignContent="center" className={classes.cell}>
         {(() => {
           if (noContent) {
             return isLoading

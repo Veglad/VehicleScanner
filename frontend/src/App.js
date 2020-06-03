@@ -5,7 +5,7 @@ import { makeStyles, createStyles } from '@material-ui/core/styles';
 import Prediction from './components/PredictionComponent'
 import ButtonGroup from './components/ButtonGroup'
 import { predictByImage, detectByImage } from './api/api'
-import { Grid, Button } from '@material-ui/core';
+import { Grid, Button, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles(() => createStyles({
   root: {
@@ -17,6 +17,11 @@ const useStyles = makeStyles(() => createStyles({
   upload: {
     color: '#00b0ff',
     marginBottom: 16,
+  },
+  title: {
+    fontSize: '2.8em',
+    color: '#fff',
+    margin: '16px 0',
   },
 }));
 
@@ -45,7 +50,11 @@ export default function App() {
   const [selectedPredictionType, setSelectedPredictionType] = useState(predictionType.DETECTION)
 
   const handlePredictionSeleted = prediction => setSelectedPredictionType(prediction.type)
-  const handleUpload = () => uploadFile(fileToUpload)
+  const handleUpload = () => {
+    setPrediction(undefined)
+    uploadFile(fileToUpload)
+  }
+
   const handleSetFileToUpload = file => {
     setPrediction(undefined)
     setFileToUpload(file)
@@ -86,6 +95,9 @@ export default function App() {
 
   return (
     <Grid container className={classes.root} direction="column">
+      <Grid item container justify="center">
+        <Typography className={classes.title}>Vehicle Scanner</Typography>
+      </Grid>
       <Grid item container className={classes.buttonGroup} justify="center">
         <ButtonGroup
           items={items}
