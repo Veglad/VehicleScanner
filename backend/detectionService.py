@@ -5,6 +5,10 @@ import pandas as pd
 
 SINGLE_RESULT_FILE_PATH = 'singleResult.txt'
 
+EMPTY_RESPONSE = {
+    'hasResult': False
+}
+
 def predict(darknetCommandPath, vehicleDataPath, cfgPath, modelPath, imagePath, thresh, outFilePath):
   return subprocess.Popen([
     darknetCommandPath, 'detector', 'test', vehicleDataPath,
@@ -32,6 +36,7 @@ def getDetectionResults(darknetCommandPath, vehicleDataPath, cfgPath,
       for rawPrediction in data:
         for objectPrediction in rawPrediction['objects']:
           prediction = {
+              'hasResult': True,
               'className': classesNames[objectPrediction['class_id']],
               'confidence': objectPrediction['confidence'],
               'coordinates': {
@@ -50,4 +55,4 @@ def getPrediction(darknetCommandPath, vehicleDataPath, cfgPath, modelPath,
         darknetCommandPath, vehicleDataPath, cfgPath, 
         modelPath, imagePath, thresh, classesNamesFilePath
   )
-  return 0 if len(predictions) == 0 else max(predictions, key=(lambda p: p['confidence']))
+  return EMPTY_RESPONSE if len(predictions) == 0 else max(predictions, key=(lambda p: p['confidence']))

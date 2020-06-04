@@ -10,6 +10,9 @@ const useStyles = makeStyles(() => createStyles({
   percentage: {
     fontSize: '2.4em',
   },
+  empty: {
+    fontSize: '2.4em',
+  },
   predictionClass: {
     fontSize: '2.0em',
   },
@@ -19,17 +22,29 @@ const useStyles = makeStyles(() => createStyles({
   }
 }));
 
-const PredictionBlock = ({ predictionClass, predictionPercentage }) => {
+const PredictionBlock = ({ hasResult, predictionClass, predictionPercentage }) => {
   const classes = useStyles()
 
   return (
     <Grid container alignContent="center" className={classes.root}>
-      <Grid item container justify="center">
-        <Typography className={classNames(classes.label, classes.predictionClass)}>{predictionClass}</Typography>
-      </Grid>
-      <Grid item container justify="center">
-        <Typography className={classNames(classes.label, classes.percentage)}>{predictionPercentage}%</Typography>
-      </Grid>
+      {hasResult
+        ? (
+          <>
+            <Grid item container justify="center">
+              <Typography className={classNames(classes.label, classes.predictionClass)}>{predictionClass}</Typography>
+            </Grid>
+            <Grid item container justify="center">
+              <Typography className={classNames(classes.label, classes.percentage)}>{predictionPercentage}%</Typography>
+            </Grid>
+          </>
+        )
+        : (
+          <Grid item container justify="center">
+            <Typography className={classNames(classes.label, classes.empty)}>Can't recognize</Typography>
+          </Grid>
+        )
+      }
+
     </Grid>
   );
 }

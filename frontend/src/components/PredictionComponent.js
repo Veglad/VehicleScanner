@@ -88,6 +88,7 @@ const PredictionComponent = ({ imagePath, prediction = {}, isLoading }) => {
 
           return prediction.type === predictionType.PREDICTION
             ? <PredictionBlock
+              hasResult={prediction.hasResult}
               predictionClass={prediction.className}
               predictionPercentage={(prediction.confidence * 100).toFixed(2)}
             />
